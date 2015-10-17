@@ -3,6 +3,10 @@
 <HEAD>
   <TITLE>Diff, Match and Patch: Demo of Diff</TITLE>
   <SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript" SRC="../javascript/diff_match_patch.js"></SCRIPT>
+  <style>
+  .highlight { background-color: yellow;}
+  .highlight.highlight_blue { background-color: pink;}
+  </style>
 </HEAD>
 
 <BODY>
@@ -151,7 +155,7 @@ function highlight (text, range, cb) {
   if (!range || typeof range[0] == 'undefined' || typeof range[1] == 'undefined') {
     return new Error('undefined range indexes');
   }
-  cb = cb || '$1<u>$2</u>';
+  cb = cb || '$1<span class="highlight">$2</span>';
   // \s\S - match all
   range[0] *= 1;
   range[1] *= 1;
@@ -179,8 +183,8 @@ function indexesRecalculate () {
   var splits = [];
   text2 = text2.split('');
   (recalc(lastDiff, [startIndex, endIndex]) || []).forEach(function (range) {
-    text2[range[0]] = '<u>' + text2[range[0]];
-    text2[range[1] - 1] = text2[range[1] - 1] + '</u>';
+    text2[range[0]] = '<span class="highlight highlight_blue">' + text2[range[0]];
+    text2[range[1] - 1] = text2[range[1] - 1] + '</span>';
   });
   text2 = text2.join('');
 
@@ -243,7 +247,9 @@ not worth the overhead.  The larger the edit cost, the more agressive the cleanu
     <button type="submit" onclick="indexesRecalculate()">Recalculate</button>
   </form>
   <p class="recalculate-index__results">
+    <b>origin</b>
     <p class="recalculate-index__results__origin"></p>
+    <b>result</b>
     <p class="recalculate-index__results__result"></p>
   </p>
 </div>
